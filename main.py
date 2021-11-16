@@ -1,7 +1,7 @@
 from app import App
 from console import Console
-from repository import UserRepository
-from service import UserService
+from repository import UserRepository, VoucherRepository
+from service import UserService, VoucherService
 from storage import Storage
 
 import locale
@@ -11,11 +11,14 @@ if __name__ == '__main__':
     storage = Storage()
 
     userRepository = UserRepository(storage)
+    voucherRepository = VoucherRepository(storage)
 
     userService = UserService(userRepository)
+    voucherService = VoucherService(voucherRepository)
 
     app: App = Console(
-        userService = userService
+        userService = userService,
+        voucherService = voucherService
     )
 
     # Run Aplikasi
