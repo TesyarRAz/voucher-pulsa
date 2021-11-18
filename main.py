@@ -1,4 +1,4 @@
-from cmd import App, Console
+from cmd.console import Console
 from repository import UserRepository, VoucherRepository
 from repository.paketdata_repository import PaketDataRepository
 from repository.pembelian_repository import PembelianRepository
@@ -25,7 +25,7 @@ if __name__ == '__main__':
     paketDataService = PaketDataService(paketDataRepository)
     pembelianService = PembelianService(pembelianRepository)
 
-    app: App = Console(
+    app = Console(
         userService = userService,
         voucherService = voucherService,
         pulsaService = pulsaService,
@@ -34,7 +34,7 @@ if __name__ == '__main__':
     )
 
     # Run Aplikasi
-    locale.setlocale(locale.LC_ALL, 'id_ID')
+    # locale.setlocale(locale.LC_ALL, 'id_ID')
 
     storage.load()
     app.run()
