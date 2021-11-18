@@ -23,12 +23,16 @@ class Console(App):
 
         if self.user.role == 'admin':
             return self.menu_admin()
+        elif self.user.role == 'user':
+            return self.menu_user()
 
     def menu_admin(self) -> bool:
         self.text_dedent('''
         1. Master User
         2. Master Saldo
-        3. Riwayat Pembelian
+        3. Master Produk
+        4. Master Paket Data
+        5. Riwayat Pembelian
         ''')
         code = self.request()
 
@@ -153,6 +157,91 @@ class Console(App):
                     self.voucherService.delete(voucher)
                 elif code == 0:
                     return True
+        elif code == 3:
+            clear = True
+            while True:
+                if clear:
+                    self.clear()
+                    self.header()
+                self.text_dedent('''
+                1. Daftar Pulsa
+                2. Tambah Pulsa
+                3. Edit Pulsa
+                4. Hapus Pulsa
+                0. Kembali
+                ''')
+
+                clear = True
+
+                code = self.request()
+                if code == 1:
+                    users = self.userService.findByRole('user')
+
+                    df = pd.DataFrame([(x.kode_user(), x.name, x.username, x.password, x.saldo) for x in users], columns=('ID', 'Nama', 'Username', 'Password', 'Saldo'))
+
+                    df.set_index('ID')
+
+                    print(tabulate.tabulate(df, headers=df.columns, tablefmt="pretty", showindex=False))
+
+                    clear = False
+                elif code == 2:
+                    user = User()
+                    user.name     = input('Masukan Nama     : ')
+                    user.username = input('Masukan Username : ')
+                    user.password = input('Masukan Password : ')
+                    user.saldo    = 0
+                    user.role     = 'user'
+
+                    self.userService.create(user)
+                elif code == 3:
+                    id = input('ID User [-1 untuk batal] : ')
+
+                    if id == '-1':
+                        continue
+
+                    user = self.userService.findByKode(id)
+
+                    if user == None:
+                        print('User itu tidak ada')
+                        input()
+                    
+                    user.name     = input('Masukan Nama     : ')
+                    user.username = input('Masukan Username : ')
+                    user.password = input('Masukan Password : ')
+
+                    self.userService.save()
+
+                elif code == 4:
+                    id = input('ID User [-1 untuk batal] : ')
+
+                    if id == '-1':
+                        continue
+
+                    user = self.userService.findByKode(id)
+
+                    if user == None:
+                        print('User itu tidak ada')
+                        input()
+                    
+                    self.userService.delete(user)
+
+                elif code == 0:
+                    return True
+        return False
+
+    def menu_user(self) -> bool:
+        self.text_dedent('''
+        1. Buat Pembelian
+        2. Isi Saldo
+        3. Riwayat Pembelian
+        ''')
+        code = self.request()
+
+        if code == 1:
+            self.text_dedent('''
+            1. Pulsa
+            2. Paket Data
+            ''')
 
         return False
 

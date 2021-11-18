@@ -1,5 +1,4 @@
-from app import App
-from console import Console
+from app import App, Console
 from repository import UserRepository, VoucherRepository
 from service import UserService, VoucherService
 from storage import Storage
