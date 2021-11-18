@@ -23,6 +23,12 @@ class PulsaRepository(Repository):
 
         self.save()
 
+    def findAll(self) -> List[Pulsa]:
+        return self.pulsas
+
+    def findByKode(self, kode: int) -> Pulsa:
+        return [x for x in self.pulsas if x.kode_pulsa() == kode][0]
+
     def findByJenis(self, jenis: str) -> List[Pulsa]:
         return [x for x in self.pulsas if x.jenis == jenis]
 

@@ -20,6 +20,9 @@ class UserService:
     def create(self, user: User):
         self.repository.create(user)
 
+    def update(self, user: User):
+        self.repository.update(user)
+
     def delete(self, user: User):
         self.repository.delete(user)
 

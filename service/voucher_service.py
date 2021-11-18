@@ -21,6 +21,12 @@ class VoucherService:
 
         self.repository.create(voucher)
 
+    def transaction(self, voucher: Voucher, user: User):
+        user.saldo += voucher.saldo
+        voucher.used_by = user
+
+        self.save()
+
     def delete(self, user: User):
         self.repository.delete(user)
         

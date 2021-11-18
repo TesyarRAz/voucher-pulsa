@@ -16,6 +16,13 @@ class UserRepository(Repository):
 
         self.save()
 
+    def update(self, user: User):
+        for i, x in enumerate(self.users):
+            if user.id == x.id:
+                self.users[i] = user
+
+        self.save()
+
     def delete(self, user: User):
         for i, x in enumerate(self.users):
             if x.id == user.id:
