@@ -1,10 +1,6 @@
 from cmd.console import Console
-from repository import UserRepository, VoucherRepository
-from repository.paketdata_repository import PaketDataRepository
-from repository.pembelian_repository import PembelianRepository
-from repository.pulsa_repository import PulsaRepository
-from service import UserService, VoucherService, PulsaService, PaketDataService
-from service.pembelian_service import PembelianService
+from repository import *
+from service import *
 from storage import Storage
 
 import locale
